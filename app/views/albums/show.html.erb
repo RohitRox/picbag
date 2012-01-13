@@ -11,7 +11,8 @@
 </p>
 <h2>Photos</h2>
 <% for photo in @album.photos %>
- <a href="<%=photo.image.url%>"><%= image_tag photo.image.url(:thumb) %></a>
+ <a href="<%=photo.image.url%>"><%= image_tag photo.image.url(:thumb) %></a> | <%=photo.category %>
+ <%=link_to "view" ,album_photo_path(@album, photo) %>
 <hr />
 <% end %>
 <%=link_to 'add photo' ,new_album_photo_path(@album) %>

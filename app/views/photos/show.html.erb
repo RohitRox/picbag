@@ -1,0 +1,9 @@
+<h2><%=@photo.title+" from "+ @album.title %></h2>
+<div id="imgtag">
+<%= image_tag @photo.image.url %> | <%=@photo.category %>
+</div>
+<div id="taglist">
+  <span class="tagtitle">List of Tags</span>
+  <ol>
+  </ol>
+</div>

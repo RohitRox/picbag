@@ -12,5 +12,8 @@ class PhotosController < ApplicationController
     @album.save
     redirect_to @album
   end
-  
+   def show
+     @album = Album.find(params[:album_id]) 
+     @photo = @album.photos.find(params[:id])
+   end  
 end
