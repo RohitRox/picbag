@@ -1,6 +1,13 @@
-require File.expand_path('../boot', __FILE__)
+require 'rack/mongoid' # TADA!
+require 'mongoid/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'active_resource/railtie'
+require 'rails/test_unit/railtie'
 
+require File.expand_path('../boot', __FILE__)
 require 'rails/all'
+
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -17,6 +24,8 @@ module Picbag
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+
+    config.autoload_paths += Dir["#{config.root}/lib/**/"] 
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -44,5 +53,9 @@ module Picbag
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    config.middleware.use "ServeGridfsImage"
+    
+    
   end
 end

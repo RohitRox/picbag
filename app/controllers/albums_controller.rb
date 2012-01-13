@@ -1,41 +1,86 @@
 class AlbumsController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
+  # GET /albums
+  # GET /albums.json
   def index
-    @albums = Albums.all
+    @albums = Album.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @albums }
+    end
   end
 
+  # GET /albums/1
+  # GET /albums/1.json
   def show
-    @albums = Albums.find(params[:id])
+    @album = Album.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @album }
+    end
   end
 
+  # GET /albums/new
+  # GET /albums/new.json
   def new
-    @albums = Albums.new
-  end
+    @album = Album.new
 
-  def create
-    @albums = Albums.new(params[:albums])
-    if @albums.save
-      redirect_to @albums, :notice => "Successfully created albums."
-    else
-      render :action => 'new'
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @album }
     end
   end
 
+  # GET /albums/1/edit
   def edit
-    @albums = Albums.find(params[:id])
+    @album = Album.find(params[:id])
   end
 
-  def update
-    @albums = Albums.find(params[:id])
-    if @albums.update_attributes(params[:albums])
-      redirect_to @albums, :notice  => "Successfully updated albums."
-    else
-      render :action => 'edit'
+  # POST /albums
+  # POST /albums.json
+  def create
+    @album = current_user.albums.new(params[:album])
+
+    respond_to do |format|
+      if @album.save
+        format.html { redirect_to @album, notice: 'Album was successfully created.' }
+        format.json { render json: @album, status: :created, location: @album }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @album.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+  # PUT /albums/1
+  # PUT /albums/1.json
+  def update
+    @album = Album.find(params[:id])
+
+    respond_to do |format|
+      if @album.update_attributes(params[:album])
+        format.html { redirect_to @album, notice: 'Album was successfully updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @album.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /albums/1
+  # DELETE /albums/1.json
   def destroy
-    @albums = Albums.find(params[:id])
-    @albums.destroy
-    redirect_to albums_url, :notice => "Successfully destroyed albums."
+    @album = Album.find(params[:id])
+    @album.destroy
+
+    respond_to do |format|
+      format.html { redirect_to albums_url }
+      format.json { head :ok }
+    end
   end
 end

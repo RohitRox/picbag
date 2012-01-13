@@ -1,54 +1,49 @@
 require 'test_helper'
 
 class AlbumsControllerTest < ActionController::TestCase
-  def test_index
+  setup do
+    @album = albums(:one)
+  end
+
+  test "should get index" do
     get :index
-    assert_template 'index'
+    assert_response :success
+    assert_not_nil assigns(:albums)
   end
 
-  def test_show
-    get :show, :id => Albums.first
-    assert_template 'show'
-  end
-
-  def test_new
+  test "should get new" do
     get :new
-    assert_template 'new'
+    assert_response :success
   end
 
-  def test_create_invalid
-    Albums.any_instance.stubs(:valid?).returns(false)
-    post :create
-    assert_template 'new'
+  test "should create album" do
+    assert_difference('Album.count') do
+      post :create, album: @album.attributes
+    end
+
+    assert_redirected_to album_path(assigns(:album))
   end
 
-  def test_create_valid
-    Albums.any_instance.stubs(:valid?).returns(true)
-    post :create
-    assert_redirected_to albums_url(assigns(:albums))
+  test "should show album" do
+    get :show, id: @album.to_param
+    assert_response :success
   end
 
-  def test_edit
-    get :edit, :id => Albums.first
-    assert_template 'edit'
+  test "should get edit" do
+    get :edit, id: @album.to_param
+    assert_response :success
   end
 
-  def test_update_invalid
-    Albums.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Albums.first
-    assert_template 'edit'
+  test "should update album" do
+    put :update, id: @album.to_param, album: @album.attributes
+    assert_redirected_to album_path(assigns(:album))
   end
 
-  def test_update_valid
-    Albums.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Albums.first
-    assert_redirected_to albums_url(assigns(:albums))
-  end
+  test "should destroy album" do
+    assert_difference('Album.count', -1) do
+      delete :destroy, id: @album.to_param
+    end
 
-  def test_destroy
-    albums = Albums.first
-    delete :destroy, :id => albums
-    assert_redirected_to albums_url
-    assert !Albums.exists?(albums.id)
+    assert_redirected_to albums_path
   end
 end

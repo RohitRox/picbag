@@ -1,16 +1,20 @@
-<% title "Albums" %>
+<p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @albums.title %>
-</p>
-<p>
-  <strong>User:</strong>
-  <%= @albums.user %>
+  <b>Title:</b>
+  <%= @album.title %>
 </p>
 
 <p>
-  <%= link_to "Edit", edit_albums_path(@albums) %> |
-  <%= link_to "Destroy", @albums, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", albums_path %>
+  <b>User:</b>
+  <%= @album.user.email %>
 </p>
+<h2>Photos</h2>
+<% for photo in @album.photos %>
+ <a href="<%=photo.image.url%>"><%= image_tag photo.image.url(:thumb) %></a>
+<hr />
+<% end %>
+<%=link_to 'add photo' ,new_album_photo_path(@album) %>
+
+<%= link_to 'Edit', edit_album_path(@album) %> |
+<%= link_to 'Back', albums_path %>

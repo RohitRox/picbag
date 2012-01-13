@@ -11,7 +11,7 @@ gem 'bson_ext'
 gem 'devise'
 gem 'pry'
 gem "nifty-generators", :group => :development
-gem 'carrierwave'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'mini_magick'
 
 # Gems used only for assets and not required
