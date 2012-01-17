@@ -3,5 +3,6 @@ class Album
   include Mongoid::Timestamps
   field :title, :type => String
   belongs_to :user
-  embeds_many :photos
+  has_many :photos
 end
+

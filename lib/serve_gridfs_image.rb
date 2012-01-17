@@ -11,7 +11,7 @@ class ServeGridfsImage
     end
   end
 
-  private  
+  private
   def process_request(env, key)
     begin
       Mongo::GridFileSystem.new(Mongoid.database).open(key, 'r') do |file|
@@ -22,3 +22,4 @@ class ServeGridfsImage
     end
   end
 end
+

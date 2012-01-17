@@ -1,12 +1,15 @@
 Picbag::Application.routes.draw do
 
   resources :albums do
-    resources :photos
+    resources :photos do
+      resources :tags
+     end
   end
+
 
   devise_for :users
 
-  
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -65,3 +68,4 @@ Picbag::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+

@@ -1,9 +1,33 @@
 <h2><%=@photo.title+" from "+ @album.title %></h2>
+<% tags = @photo.tags %>
+
 <div id="imgtag">
-<%= image_tag @photo.image.url %> | <%=@photo.category %>
+<% i = 0 %>
+<% for t in tags %>
+<div class="tagview" id="<%='view_'+i.to_s%>" style="left: <%=t.x_cord%>px; top:<%=t.y_cord%>px"></div>
+<% i+=1 %>
+<% end %>
+<%= image_tag @photo.image.url,:id=>"myimg" %> | <%=@photo.category %>
+<div id="tagit" style="display:none">
+<div class="box"></div>
+<div class="name">
+<div class="text">Type any name or tag</div>
+<%= form_for @tag ,:url=>album_photo_tags_path(@album, @photo) , :remote=>true do |f| %>
+<%=f.text_field(:name, :id=>"tagname") %>
+<input type ="submit" value= "Save Tag" id ="btnsave" />
+<input type="button" value= "Cancel" id="btncancel" />
+<% end %>
+</div>
+</div>
 </div>
 <div id="taglist">
-  <span class="tagtitle">List of Tags</span>
-  <ol>
-  </ol>
+ <span class="tagtitle">List of Tags : <%= @photo.tags.length %> Tags </span>
+ <ol>
+ <% j= 0 %>
+ <% tags.each do |t| %>
+ <li rel="<%=j.to_s%>"><a href="#"><%=t.name %></a> (<a href="#" class="remove">Remove</a>) </li>
+ <% j+=1 %>
+ <% end %>
+ </ol>
 </div>
+
